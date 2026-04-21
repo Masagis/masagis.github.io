@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --bg: #0D0D0D;
+    --bg-card: #161616;
+    --bg-card-hover: #1C1C1C;
+    --ink: #EDEDED;
+    --ink-secondary: #A0A0A0;
+    --ink-muted: #5A5A5A;
+    --ink-faint: #333333;
+    --border: #222222;
+    --accent: #6C9BF2;
+    --accent-dim: rgba(108, 155, 242, 0.12);
+  }
+
+  html.light {
+    --bg: #F5F5F3;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F0EFED;
+    --ink: #1A1A1A;
+    --ink-secondary: #555555;
+    --ink-muted: #999999;
+    --ink-faint: #DDDDDD;
+    --border: #E5E5E2;
+    --accent: #4A7ADB;
+    --accent-dim: rgba(74, 122, 219, 0.08);
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: white;
+  }
+}
+
+/* Custom scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+  transition: background 0.3s;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Vertical scrollbar */
+.scrollbar-thin-y {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.scrollbar-thin-y::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin-y::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.scrollbar-thin-y::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+  transition: background 0.3s;
+}
+
+.scrollbar-thin-y::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
