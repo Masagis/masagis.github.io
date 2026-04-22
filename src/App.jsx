@@ -1,139 +1,70 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Instagram, ArrowUpRight, Sun, Moon, Code2, Layers, Terminal, Briefcase, User } from 'lucide-react'
+import { ArrowUpRight, Sun, Moon, Layers, Briefcase, House, User, Heart, Coffee } from 'lucide-react'
 
-/* ──────────────────────────────────────────────
-  DATA
-   ────────────────────────────────────────────── */
+import Card from './components/Card'
+import { useTheme } from './hooks/useTheme'
+import { EXPERTISE, SOCIALS, EXPERIENCE, PROJECTS } from './services/data'
 
-const PROJECTS = [
-  { title: 'E-Commerce Platform', role: 'Full-stack Developer', tags: ['React', 'TypeScript', 'NestJS'], date: '04/26', link: '#' },
-  { title: 'Task Flow', role: 'Frontend Developer', tags: ['React', 'Tailwind', 'Firebase'], date: '02/26', link: '#' },
-  { title: 'Algorithm Visualizer', role: 'Developer', tags: ['C++', 'TypeScript', 'Canvas'], date: '11/25', link: '#' },
-  { title: 'REST API Boilerplate', role: 'Backend Developer', tags: ['NestJS', 'Docker', 'Swagger'], date: '08/25', link: '#' },
-  { title: 'REST API Boilerplate', role: 'Backend Developer', tags: ['NestJS', 'Docker', 'Swagger'], date: '08/25', link: '#' },
-  { title: 'REST API Boilerplate', role: 'Backend Developer', tags: ['NestJS', 'Docker', 'Swagger'], date: '08/25', link: '#' },
-]
+function ExperienceDescription({ description }) {
+  const [expanded, setExpanded] = useState(false);
+  const items = description
+    .split(/[●•]/)
+    .flatMap((s) => s.split(/\.\s+/))
+    .map((s) => s.replace(/^[\s.●•-]+/, '').trim())
+    .filter(Boolean);
 
-const EXPERIENCE = [
-  {
-    company: 'PT Tech Innovation',
-    role: 'Frontend Engineer',
-    type: 'Full-time',
-    period: 'Jan 2025 – Present',
-    location: 'Jakarta, Indonesia',
-    description: 'Developing and maintaining core web applications using React and TypeScript. Building reusable component libraries and improving CI/CD pipelines.',
-  },
-  {
-    company: 'Startup Digital',
-    role: 'Full-stack Developer',
-    type: 'Contract',
-    period: 'Jun 2024 – Dec 2024',
-    location: 'Remote',
-    description: 'Built end-to-end features for an e-commerce platform. Implemented REST APIs with NestJS and integrated third-party payment gateways.',
-  },
-  {
-    company: 'Freelance',
-    role: 'Web Developer',
-    type: 'Freelance',
-    period: 'Jan 2023 – May 2024',
-    location: 'Remote',
-    description: 'Delivered responsive websites and web apps for small businesses. Focused on clean UI/UX with React, Tailwind CSS, and Firebase.',
-  },
-  {
-    company: 'Freelance',
-    role: 'Web Developer',
-    type: 'Freelance',
-    period: 'Jan 2023 – May 2024',
-    location: 'Remote',
-    description: 'Delivered responsive websites and web apps for small businesses. Focused on clean UI/UX with React, Tailwind CSS, and Firebase.',
-  },
-  {
-    company: 'Freelance',
-    role: 'Web Developer',
-    type: 'Freelance',
-    period: 'Jan 2023 – May 2024',
-    location: 'Remote',
-    description: 'Delivered responsive websites and web apps for small businesses. Focused on clean UI/UX with React, Tailwind CSS, and Firebase.',
-  },
-]
+  const visibleItems = expanded ? items : items.slice(0, 2);
+  const hasMore = items.length > 2;
 
-const EXPERTISE = [
-  { icon: Code2, title: 'Frontend', desc: 'React, TypeScript, Tailwind CSS' },
-  { icon: Terminal, title: 'Backend', desc: 'NestJS, Node.js, PostgreSQL' },
-  { icon: Layers, title: 'Other', desc: 'Docker, C++, Git' },
-]
-
-const SOCIALS = [
-  { name: 'GitHub', icon: Github, handle: 'agistwahyuji', href: 'https://github.com' },
-  { name: 'LinkedIn', icon: Linkedin, handle: 'agis-tri-wahyuji', href: 'https://linkedin.com' },
-  { name: 'Instagram', icon: Instagram, handle: '@agistwahyuji', href: 'https://instagram.com' },
-]
-
-/* ──────────────────────────────────────────────
-  THEME
-   ────────────────────────────────────────────── */
-
-function useTheme() {
-  const [dark, setDark] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme')
-      if (saved) return saved !== 'light'
-      return true
-    }
-    return true
-  })
-
-  useEffect(() => {
-    const root = document.documentElement
-    if (dark) {
-      root.classList.remove('light')
-      localStorage.setItem('theme', 'dark')
-    } else {
-      root.classList.add('light')
-      localStorage.setItem('theme', 'light')
-    }
-  }, [dark])
-
-  return [dark, () => setDark((d) => !d)]
-}
-
-/* ──────────────────────────────────────────────
-   ANIMATIONS
-   ────────────────────────────────────────────── */
-
-const cardVariant = (i = 0) => ({
-  initial: { opacity: 0, y: 20, scale: 0.97 },
-  animate: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { duration: 0.5, delay: 0.1 + i * 0.06, ease: [0.16, 1, 0.3, 1] },
-  },
-})
-
-/* ──────────────────────────────────────────────
-  SHARED CARD WRAPPER
-   ────────────────────────────────────────────── */
-
-function Card({ children, className = '', delay = 0, hover = false, id }) {
   return (
-    <motion.div
-      {...cardVariant(delay)}
-      id={id}
-      className={`
-        bg-bg-card rounded-2xl border border-border p-5
-        transition-all duration-400 ease-smooth
-        ${hover ? 'hover:bg-bg-hover hover:border-accent/20 hover:shadow-lg hover:shadow-accent/5' : ''}
-        ${className}
-      `}
-    >
-      {children}
-    </motion.div>
-  )
+    <div className="mt-2 text-left">
+      <ul className="flex flex-col gap-1.5">
+        {visibleItems.map((item, j) => {
+          const text = item.endsWith('.') ? item : `${item}.`;
+          return (
+            <li key={j} className="flex items-start gap-2 text-xs text-ink-muted leading-relaxed">
+              <span className="text-accent font-bold">-</span>
+              <span className="flex-1">{text}</span>
+            </li>
+          );
+        })}
+      </ul>
+      {hasMore && (
+        <button 
+          onClick={() => setExpanded(!expanded)}
+          className="text-[0.65rem] text-accent mt-2 hover:text-accent/80 transition-colors focus:outline-none flex items-center gap-1 font-medium"
+        >
+          {expanded ? 'Show less ↑' : 'See more ↓'}
+        </button>
+      )}
+    </div>
+  );
 }
 
-/* ──────────────────────────────────────────────
-  APP
-   ────────────────────────────────────────────── */
+function ProjectDescription({ description }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = description?.length > 110;
+
+  return (
+    <div className="flex flex-col flex-1 mb-3 justify-start">
+      <p className={`text-xs text-ink-muted text-wrap ${expanded ? '' : 'line-clamp-3'}`}>
+        {description}
+      </p>
+      {isLong && (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setExpanded(!expanded);
+          }}
+          className="text-[0.65rem] text-accent mt-1.5 hover:text-accent/80 transition-colors focus:outline-none self-start font-medium"
+        >
+          {expanded ? 'See less ↑' : 'See more ↓'}
+        </button>
+      )}
+    </div>
+  );
+}
 
 export default function App() {
   const [dark, toggleTheme] = useTheme()
@@ -156,17 +87,13 @@ export default function App() {
           </div>
 
           <div className="flex items-center bg-bg-card border border-border rounded-full px-1 py-1">
-            <a href="#about" className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-xs font-medium transition-colors">
-              <User size={13} />
-              About
+            <a href="#home" className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-xs font-medium transition-colors">
+              <House size={13} />
+              Home
             </a>
             <a href="#work" className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-ink-muted hover:text-ink text-xs font-medium transition-colors">
               <Layers size={13} />
-              Work
-            </a>
-            <a href="#experience" className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-ink-muted hover:text-ink text-xs font-medium transition-colors">
-              <Briefcase size={13} />
-              Experience
+              Projects
             </a>
           </div>
 
@@ -200,10 +127,10 @@ export default function App() {
           <Card delay={0} className="md:col-span-2 md:row-span-2 p-8 flex flex-col justify-between min-h-[320px]">
             <div>
               <p className="text-xs text-accent font-mono tracking-wider uppercase mb-1">
-                Software Developer
+                Software Engineering
               </p>
               <p className="text-[0.7rem] text-ink-muted font-mono">
-                ソフトウェア開発者
+                ソフトウェアエンジニアリング
               </p>
             </div>
 
@@ -214,35 +141,26 @@ export default function App() {
                 <span className="text-ink-muted">WAHYUJI</span>
               </h1>
               <p className="mt-4 text-sm text-ink-secondary leading-relaxed max-w-md">
-                Crafting clean, performant digital experiences — focused on
-                frontend with React & Tailwind and backend with NestJS.
+                Crafting High-Performance Digital Experiences from Frontend to Backend.
               </p>
             </div>
 
             <div className="flex items-center gap-2 mt-4">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
-              </span>
-              <span className="text-xs text-ink-muted">Available for collaboration</span>
             </div>
           </Card>
 
           {/* ── ABOUT CARD ── */}
-          <Card delay={1} className="lg:col-span-2 p-6" id="about">
+          <Card delay={1} className="lg:col-span-2 p-6" id="home">
             <div className="flex items-center gap-2 mb-4">
               <User size={14} className="text-accent" />
               <p className="text-xs text-ink-muted font-mono uppercase tracking-wider">About</p>
             </div>
             <p className="text-sm text-ink-secondary leading-relaxed mb-3">
-              A passionate software developer based in <span className="text-ink font-medium">Indonesia</span>.
-              I build intuitive, user-centric applications with a focus on clean code and
-              modern web technologies. I believe that great software comes from the intersection
-              of thoughtful design and solid engineering.
-            </p>
+              A passionate software engineer based in <span className="text-ink font-medium">Indonesia</span>.
+              Front-End Developer with 4+ years of experience crafting responsive, scalable, and user-centric web applications. Proficient in React, Next.js, and Vue.js, I bridge the gap between thoughtful design and solid engineering to build products that users love.
+              </p>
             <p className="text-sm text-ink-secondary leading-relaxed">
-              When I'm not coding, you'll find me exploring new frameworks, contributing
-              to open source, and sharing knowledge through technical writing.
+              I transform complex UI/UX designs into pixel-perfect, high-performance interfaces while ensuring codebases are optimized for speed and long-term maintainability. Beyond the IDE, I am a committed advocate for clean code and a relentless continuous learner.
             </p>
           </Card>
 
@@ -303,17 +221,16 @@ export default function App() {
                 <p className="text-xs text-ink-muted font-mono uppercase tracking-wider">Experience</p>
               </div>
               {EXPERIENCE.length > 2 && (
-                <p className="text-[0.65rem] text-ink-faint font-mono">scroll →</p>
+                <p className="text-[0.65rem] text-ink-faint font-mono">scroll ↓</p>
               )}
             </div>
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 overflow-y-auto max-h-[380px] pr-2 scrollbar-thin">
               {EXPERIENCE.map((exp, i) => (
                 <div
                   key={`${exp.company}-${i}`}
                   className="relative rounded-xl bg-bg border border-border p-5
                             hover:border-accent/30 hover:bg-bg-hover
-                            transition-all duration-400 ease-smooth group
-                            min-w-[280px] lg:min-w-[calc(33.333%-8px)] flex-shrink-0"
+                            transition-all duration-400 ease-smooth group"
                 >
                   {/* Accent dot */}
                   <div className="flex items-center gap-2 mb-3">
@@ -331,9 +248,7 @@ export default function App() {
                     <span className="text-[0.65rem] text-ink-faint">{exp.location}</span>
                   </div>
 
-                  <p className="text-xs text-ink-muted leading-relaxed">
-                    {exp.description}
-                  </p>
+                  <ExperienceDescription description={exp.description} />
                 </div>
               ))}
             </div>
@@ -363,7 +278,7 @@ export default function App() {
                   className="group relative rounded-xl bg-bg border border-border p-4
                             hover:border-accent/30 hover:bg-bg-hover
                             transition-all duration-400 ease-smooth
-                            min-w-[240px] lg:min-w-[calc(25%-9px)] flex-shrink-0"
+                            w-[260px] lg:w-[calc(25%-9px)] flex-shrink-0 flex flex-col"
                 >
                   <div className="h-1.5 w-full rounded-full bg-gradient-to-r from-accent/40 to-accent/10 mb-4" />
 
@@ -374,11 +289,11 @@ export default function App() {
                     <ArrowUpRight size={14} className="text-ink-faint group-hover:text-accent transition-all duration-300 flex-shrink-0 mt-0.5" />
                   </div>
 
-                  <p className="text-xs text-ink-muted mb-3">{p.role}</p>
+                  <ProjectDescription description={p.description} />
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-auto">
                     <div className="flex flex-wrap gap-1">
-                      {p.tags.slice(0, 2).map((tag) => (
+                      {p.tags.slice(0, 5).map((tag) => (
                         <span key={tag} className="text-[0.65rem] text-ink-muted px-1.5 py-0.5 rounded bg-accent-dim">
                           {tag}
                         </span>
@@ -401,7 +316,10 @@ export default function App() {
           className="flex items-center justify-between py-6 mt-3"
         >
           <p className="text-xs text-ink-muted">© {new Date().getFullYear()} Agis Tri Wahyuji</p>
-          <p className="text-xs text-ink-faint font-mono">Built with React & Tailwind</p>
+          <div className="flex items-center gap-1.5 text-xs text-ink-faint font-mono">
+            Built with <Heart size={14} className="text-red-500 fill-red-500" /> 
+            and <Coffee size={14} className="text-amber-700" /> by Masagis
+          </div>
         </motion.footer>
 
       </div>
