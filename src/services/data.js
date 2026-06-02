@@ -103,6 +103,13 @@ export const EXPERIENCE = [
 
 export const PROJECTS = [
   {
+    title: "Game Engine Playground",
+    description:
+      "A mini game-engine playground built with Vue 3, Tailwind CSS, and HTML5 Canvas. Manipulate objects in realtime with keyboard and mouse controls",
+    tags: ["Vue.js", "Tailwind CSS", "HTML5 Canvas"],
+    link: "https://game-engine-playground.vercel.app/",
+  },
+  {
     title: "Kilas",
     description:
       "Kilas is a minimalist journaling app designed for the busy mind. No pressure, no long paragraphs—just one line a day to capture your most meaningful moments. Build a lifetime of memories, one sentence at a time.",

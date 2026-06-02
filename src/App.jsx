@@ -264,7 +264,7 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <p className="text-xs text-ink-faint">{PROJECTS.length} projects</p>
                 {PROJECTS.length > 3 && (
-                  <p className="text-[0.65rem] text-ink-faint font-mono">scroll →</p>
+                  <p className="text-[0.65rem] text-ink-faint font-mono">slide →</p>
                 )}
               </div>
             </div>
