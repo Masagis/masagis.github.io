@@ -1,16 +1,44 @@
-# React + Vite
+# Personal Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, single-page portfolio website for **Agis Tri Wahyuji**, a Frontend Engineer with 4+ years of experience. The site showcases professional experience, technical expertise, and personal projects through an elegant **bento-grid layout** with smooth animations and a polished dark/light theme system.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📁 Project Structure
 
-## React Compiler
+```
+personal-portfolio/
+├── index.html                  # Entry HTML with meta tags
+├── package.json                # Dependencies & scripts
+├── vite.config.js              # Vite configuration
+├── tailwind.config.js          # Tailwind theme extensions
+├── postcss.config.js           # PostCSS plugins
+└── src/
+    ├── main.jsx                # React entry point
+    ├── App.jsx                 # Main app with all sections
+    ├── index.css               # Global styles, theme tokens, scrollbars
+    ├── components/
+    │   └── Card.jsx            # Reusable animated card wrapper
+    ├── hooks/
+    │   └── useTheme.js         # Dark/light theme hook
+    └── services/
+        └── data.js             # All portfolio data (expertise, socials, experience, projects)
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Category      | Technology                            |
+| ------------- | ------------------------------------- |
+| **Runtime**   | React 19, Vite 6                      |
+| **Styling**   | Tailwind CSS 3, PostCSS, Autoprefixer |
+| **Animation** | Framer Motion 12                      |
+| **Icons**     | Lucide React                          |
+| **Linting**   | ESLint                                |
+
+---
+
+## 📜 License
+
+© 2025 Agis Tri Wahyuji. All rights reserved.
